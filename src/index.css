@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root Vars */
+:root { --primary-blue: #2563eb; --gradient-start:#3b82f6; --gradient-end:#1e40af; }
+
+/* Base */
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+.gradient-bg { background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); }
+.creative-shadow { box-shadow: 0 20px 40px rgba(37,99,235,.12); }
+
+/* Header (frosted) */
+.frosted-header { background: rgba(255,255,255,.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,.3); box-shadow: 0 4px 20px rgba(0,0,0,.05); }
+
+/* Gradient text */
+.text-gradient { background: linear-gradient(45deg, var(--primary-blue), #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+/* Links underline */
+.nav-link { position: relative; overflow: hidden; }
+.nav-link::after { content:""; position:absolute; bottom:-2px; left:50%; transform:translateX(-50%) scaleX(0); width:80%; height:2px; background-color: var(--primary-blue); transition: transform .25s ease; transform-origin:center; }
+.nav-link:hover::after { transform: translateX(-50%) scaleX(1); }
+
+/* CTA glow */
+.pulse-glow { animation: pulseGlow 2s infinite; }
+@keyframes pulseGlow { 0%,100%{ box-shadow:0 0 10px rgba(96,165,250,.8);} 50%{ box-shadow:0 0 20px rgba(96,165,250,1);} }
+
+/* Mobile menu slide */
+.slide-in-right { animation: slideInRight .3s ease-out; }
+@keyframes slideInRight { from{ opacity:0; transform: translateX(30px);} to{ opacity:1; transform: translateX(0);} }
+
+/* Menu icon */
+.icon-menu::before { content:"\2630"; }
+.icon-menu.close::before { content:"\2715"; }
+
+/* Reusable button */
+.btn-primary { @apply bg-primary text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:bg-primary-dark hover:scale-105; }
+.btn-outline { @apply border-2 border-primary text-primary px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:bg-primary hover:text-white; }
+
+/* Cards */
+.card { @apply bg-white rounded-2xl shadow-card p-6; }
+
+/* Section padding helper */
+.section { @apply py-16 md:py-24; }
+.section-title { @apply text-3xl md:text-4xl font-bold mb-3 text-gray-900; }
+.section-sub { @apply text-gray-600 max-w-2xl; }
+
+/* For the mobile menu icon animation */
+.icon-menu {
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.icon-menu:before,
+.icon-menu:after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  transition: all 0.3s ease;
+}
+
+.icon-menu:before {
+  transform: translateY(-6px);
+}
+
+.icon-menu:after {
+  transform: translateY(6px);
+}
+
+.icon-menu.close {
+  background-color: transparent;
+}
+
+.icon-menu.close:before {
+  transform: rotate(45deg);
+}
+
+.icon-menu.close:after {
+  transform: rotate(-45deg);
+}
+
+/* For the frosted glass effect */
+.frosted-header {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Ensure smooth transitions */
+header {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* For the frosted glass effect */
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Image cover behavior */
+.object-cover {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Smooth height transitions */
+[style*="height"] {
+  transition: height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Add this to your global CSS */
+.bg-wave-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='60' viewBox='0 0 200 60' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30C20 10 40 50 60 30C80 10 100 50 120 30C140 10 160 50 180 30C200 10 220 50 240 30' stroke='%2338BDF8' stroke-width='2' stroke-opacity='0.3'/%3E%3C/svg%3E");
+  background-position: left center;
+}
