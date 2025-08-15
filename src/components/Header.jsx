@@ -83,6 +83,7 @@ export default function Header() {
             <NavItem to="/services">Services</NavItem>
             <NavItem to="/portfolio">Portfolio</NavItem>
             <NavItem to="/contact">Contact</NavItem>
+            <NavItem to="/blog">Blog</NavItem>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
