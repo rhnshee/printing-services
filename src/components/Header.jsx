@@ -72,7 +72,7 @@ export default function Header() {
               <p className={`text-xs transition-colors duration-300 ${
                 scrolled ? 'text-gray-600' : 'text-white/80'
               } mt-1`}>
-                Printing Services
+                Advertising & Printing Services
               </p>
             </div>
           </Link>

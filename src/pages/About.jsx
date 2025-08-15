@@ -1,4 +1,108 @@
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Lightbulb, Users, BadgeCheck, ShieldCheck } from "lucide-react";
+
+
+function Timeline() {
+  const controls = useAnimation();
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.2 });
+
+  if (inView) controls.start("visible");
+
+  const milestones = [
+    {
+      year: "2018",
+      title: "Humble Beginnings",
+      desc: "Started as a small signage shop in Quezon City.",
+    },
+    {
+      year: "2020",
+      title: "Expansion",
+      desc: "Expanded into large-format and digital printing services.",
+    },
+    {
+      year: "2023+",
+      title: "Nationwide Success",
+      desc: "Proudly served over 500 satisfied clients nationwide.",
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-6xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-4xl font-bold text-blue-800 mb-4">Our Journey</h2>
+          <div className="w-24 h-1 bg-blue-600 mx-auto mb-6 rounded-full"></div>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            From humble beginnings to serving hundreds of clients nationwide.
+          </p>
+        </motion.div>
+
+        <div className="relative" ref={ref}>
+          {/* Vertical line */}
+          <motion.div
+            initial={{ height: 0 }}
+            animate={controls}
+            variants={{ visible: { height: "100%" } }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-200"
+          />
+
+          <div className="space-y-20">
+            {milestones.map((milestone, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 30 }}
+                animate={controls}
+                variants={{
+                  visible: { opacity: 1, y: 0, transition: { delay: idx * 0.3 } },
+                }}
+                className="relative flex flex-col md:flex-row items-center w-full"
+              >
+                {/* Content here (desktop zigzag & mobile stacked) */}
+                <div className={`hidden md:block md:w-1/2 ${idx % 2 === 0 ? "text-right pr-12" : "text-left pl-12"}`}>
+                  {idx % 2 === 0 ? (
+                    <div className="bg-blue-50 p-6 rounded-2xl shadow-lg inline-block relative">
+                      <h4 className="text-xl font-bold text-blue-800 mb-2">{milestone.year}</h4>
+                      <h5 className="text-blue-700 font-semibold mb-2">{milestone.title}</h5>
+                      <p className="text-gray-700 text-sm">{milestone.desc}</p>
+                    </div>
+                  ) : null}
+                </div>
+
+                <div className="w-8 h-8 bg-blue-600 rounded-full border-4 border-white z-10 relative shadow-lg" />
+
+                <div className={`hidden md:block md:w-1/2 ${idx % 2 !== 0 ? "pl-12" : "pr-12"}`}>
+                  {idx % 2 !== 0 ? (
+                    <div className="bg-blue-50 p-6 rounded-2xl shadow-lg inline-block relative">
+                      <h4 className="text-xl font-bold text-blue-800 mb-2">{milestone.year}</h4>
+                      <h5 className="text-blue-700 font-semibold mb-2">{milestone.title}</h5>
+                      <p className="text-gray-700 text-sm">{milestone.desc}</p>
+                    </div>
+                  ) : null}
+                </div>
+
+                {/* Mobile view */}
+                <div className="md:hidden mt-6 w-full">
+                  <div className="bg-blue-50 p-6 rounded-2xl shadow-lg w-full text-center relative">
+                    <h4 className="text-xl font-bold text-blue-800 mb-2">{milestone.year}</h4>
+                    <h5 className="text-blue-700 font-semibold mb-2">{milestone.title}</h5>
+                    <p className="text-gray-700 text-sm">{milestone.desc}</p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function About() {
   return (
@@ -60,7 +164,7 @@ export default function About() {
               <img
                 src="/images/team-working.png"
                 alt="Our Team at Work"
-                className="rounded-2xl shadow-lg"
+                className="rounded-2xl shadow-lg border border-blue-100 object-cover max-h-96 w-full"
               />
             </motion.div>
             <motion.div
@@ -84,166 +188,213 @@ export default function About() {
             </motion.div>
           </div>
 
-          {/* Mission, Values, and Team */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="grid md:grid-cols-3 gap-8 mb-20"
-          >
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition">
-              <h4 className="text-lg font-semibold text-blue-700 mb-3">Our Mission</h4>
-              <p className="text-gray-700">
-                To empower brands with designs and print materials that inspire trust, attract attention, 
-                and leave a lasting impact.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl shadow-lg p-8 hover:shadow-2xl transition">
-              <h4 className="text-lg font-semibold text-blue-700 mb-3">Our Values</h4>
-              <ul className="list-disc pl-5 text-gray-700 space-y-1">
-                <li>Creativity & Innovation</li>
-                <li>Customer-First Approach</li>
-                <li>Affordability & Quality</li>
-                <li>Reliability & Transparency</li>
-              </ul>
-            </div>
-          </motion.div>
+          {/* Mission, Values, and Meet Our Team Section */}
+          <div className="bg-gradient-to-b from-white to-blue-50">
 
-          {/* Meet Our Team Section */}
-          <section className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
-              
-              {/* Section Title */}
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-14"
-              >
-                <h2 className="text-4xl font-extrabold text-blue-800 mb-4">
-                  Meet Our Team
-                </h2>
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                  The people behind Duterte Advertising & Printing’s success — combining creativity, 
-                  skill, and dedication to deliver exceptional results.
-                </p>
-              </motion.div>
+            {/* Mission Section */}
+            <section className="py-20">
+              <div className="max-w-6xl mx-auto px-6">
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                  {/* Text */}
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <h2 className="text-4xl font-bold text-blue-800 mb-4">Our Mission</h2>
+                    <div className="w-20 h-1 bg-blue-600 mb-6 rounded-full"></div>
+                    <p className="text-lg text-gray-700 mb-4">
+                      To empower brands with high-quality designs and print materials that inspire trust, attract attention, and leave a lasting impression.
+                    </p>
+                    <p className="text-gray-600 leading-relaxed">
+                      We combine creativity with functionality — delivering solutions that not only look amazing but also work seamlessly to help businesses achieve their goals.
+                    </p>
+                  </motion.div>
 
-              {/* Team Members */}
-              <div className="grid md:grid-cols-3 gap-12">
-                
-                {/* Member 1 */}
+                  {/* Image */}
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="flex justify-center"
+                  >
+                    <img
+                      src="/images/mission-photo.png"
+                      alt="Our Mission"
+                      className="rounded-3xl shadow-xl border border-blue-100 object-cover max-h-96 w-full"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+            </section>
+
+            {/* Values Section */}
+            <section className="py-20 bg-white">
+              <div className="max-w-6xl mx-auto px-6">
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="bg-gradient-to-b from-blue-50 to-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
+                  transition={{ duration: 0.6 }}
+                  className="text-center mb-16"
                 >
-                  <img
-                    src="/images/member1.jpg"
-                    alt="Charro Duterte"
-                    className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-blue-200 mb-4"
-                  />
-                  <h4 className="text-xl font-semibold text-blue-700">Charro Duterte</h4>
-                  <p className="text-gray-500 text-sm mb-3">Founder & CEO</p>
-                  <p className="text-gray-700 text-sm">
-                    Visionary leader with a passion for design and business growth, ensuring our 
-                    services exceed client expectations.
+                  <h2 className="text-4xl font-bold text-blue-800 mb-4">Our Core Values</h2>
+                  <div className="w-24 h-1 bg-blue-600 mx-auto mb-6 rounded-full"></div>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    The principles that guide every project, client interaction, and product we deliver.
                   </p>
                 </motion.div>
 
-                {/* Member 2 */}
+                {/* Values Grid */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="bg-gradient-to-b from-blue-50 to-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
+                  className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
                 >
-                  <img
-                    src="/images/member2.jpg"
-                    alt="Maria Santos"
-                    className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-blue-200 mb-4"
-                  />
-                  <h4 className="text-xl font-semibold text-blue-700">Maria Santos</h4>
-                  <p className="text-gray-500 text-sm mb-3">Creative Director</p>
-                  <p className="text-gray-700 text-sm">
-                    Skilled in branding and visual storytelling, Maria ensures every project reflects 
-                    our clients’ unique identities.
+                  {[
+                    {
+                      icon: <Lightbulb className="w-12 h-12 text-blue-600" />,
+                      title: "Creativity & Innovation",
+                      desc: "We push design boundaries to deliver unique, standout solutions."
+                    },
+                    {
+                      icon: <Users className="w-12 h-12 text-blue-600" />,
+                      title: "Customer-First",
+                      desc: "Your satisfaction and goals are at the core of everything we do."
+                    },
+                    {
+                      icon: <BadgeCheck className="w-12 h-12 text-blue-600" />,
+                      title: "Quality & Affordability",
+                      desc: "We balance premium quality with competitive pricing."
+                    },
+                    {
+                      icon: <ShieldCheck className="w-12 h-12 text-blue-600" />,
+                      title: "Transparency & Reliability",
+                      desc: "We work with honesty, clarity, and dependable delivery."
+                    }
+                  ].map((value, idx) => (
+                    <motion.div
+                      key={idx}
+                      whileHover={{ y: -5, scale: 1.03 }}
+                      className="bg-gradient-to-b from-blue-50 to-white border border-blue-100 rounded-3xl shadow-lg p-6 flex flex-col items-center text-center transition-all duration-300"
+                    >
+                      <div className="w-16 h-16 flex items-center justify-center mb-4">
+                        {value.icon}
+                      </div>
+                      <h4 className="text-lg font-semibold text-blue-700 mb-2">{value.title}</h4>
+                      <p className="text-gray-600 text-sm">{value.desc}</p>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </section>
+
+
+            {/* Milestones / Timeline Section */}
+            <Timeline />
+
+
+            {/* Meet Our Team Section */}
+            <section className="py-20 bg-blue-50">
+              <div className="max-w-7xl mx-auto px-6">
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-center mb-14"
+                >
+                  <h2 className="text-4xl font-extrabold text-blue-800 mb-4">Meet Our Team</h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    The people behind Duterte Advertising & Printing’s success — combining creativity, skill, and dedication to deliver exceptional results.
                   </p>
                 </motion.div>
 
-                {/* Member 3 */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 }}
-                  className="bg-gradient-to-b from-blue-50 to-white rounded-2xl shadow-lg p-6 text-center hover:shadow-2xl transition"
-                >
-                  <img
-                    src="/images/member3.jpg"
-                    alt="John Reyes"
-                    className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-blue-200 mb-4"
-                  />
-                  <h4 className="text-xl font-semibold text-blue-700">John Reyes</h4>
-                  <p className="text-gray-500 text-sm mb-3">Production Manager</p>
-                  <p className="text-gray-700 text-sm">
-                    Oversees the printing and signage process, ensuring top-notch quality and timely 
-                    delivery for all client projects.
-                  </p>
-                </motion.div>
-
+                <div className="grid md:grid-cols-3 gap-12">
+                  {[
+                    {
+                      name: "Charro Duterte",
+                      role: "CEO",
+                      image: "/images/member1.jpg",
+                      desc: "Visionary leader with a passion for design and business growth, ensuring our services exceed client expectations."
+                    },
+                    {
+                      name: "Richard Duterte",
+                      role: "COO",
+                      image: "/images/member2.jpg",
+                      desc: "Skilled in branding and visual storytelling, Richard ensures every project reflects our clients’ unique identities."
+                    },
+                    {
+                      name: "Reorio Mirandilla",
+                      role: "Graphic Designer",
+                      image: "/images/member3.jpg",
+                      desc: "Oversees the printing and signage process, ensuring top-notch quality and timely delivery for all client projects."
+                    }
+                  ].map((member, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 + idx * 0.2 }}
+                      className="bg-white rounded-3xl shadow-lg p-6 text-center hover:shadow-2xl transition border border-blue-100"
+                    >
+                      <img
+                        src={member.image}
+                        alt={member.name}
+                        className="w-32 h-32 object-cover rounded-full mx-auto border-4 border-blue-200 mb-4"
+                      />
+                      <h4 className="text-xl font-semibold text-blue-700">{member.name}</h4>
+                      <p className="text-gray-500 text-sm mb-3">{member.role}</p>
+                      <p className="text-gray-700 text-sm">{member.desc}</p>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
-          </section>
-
-          {/* Milestones */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="bg-gradient-to-r from-blue-100 to-white rounded-2xl shadow-lg p-10 mb-20"
-          >
-            <h3 className="text-2xl font-bold text-blue-700 mb-6 text-center">Our Journey</h3>
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <h4 className="text-xl font-bold text-blue-800">2018</h4>
-                <p className="text-gray-700">Started as a small signage shop in Quezon City.</p>
-              </div>
-              <div>
-                <h4 className="text-xl font-bold text-blue-800">2020</h4>
-                <p className="text-gray-700">Expanded into large-format and digital printing services.</p>
-              </div>
-              <div>
-                <h4 className="text-xl font-bold text-blue-800">2023+</h4>
-                <p className="text-gray-700">Proudly served over 500 satisfied clients nationwide.</p>
-              </div>
-            </div>
-          </motion.div>
+            </section>
+          </div>
 
           {/* Clients */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="text-center"
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="py-20"
           >
-            <h3 className="text-2xl font-bold text-blue-700 mb-4">
-              Clients & Brands We’ve Served
-            </h3>
-            <p className="text-gray-700 max-w-2xl mx-auto mb-8">
-              From local entrepreneurs to established companies, we are proud to be part of 
-              their brand journey.
-            </p>
-            <div className="flex flex-wrap justify-center gap-6">
-              <img src="/images/client 1.png" alt="Client Logo" className="h-12" />
-              <img src="/images/client2.png" alt="Client Logo" className="h-12" />
-              <img src="/images/client 3.png" alt="Client Logo" className="h-12" />
-            </div>
-          </motion.div>
+            <div className="max-w-6xl mx-auto px-6">
+              <div className="text-center mb-14">
+                <h3 className="text-3xl font-bold text-blue-800 mb-4">
+                  Clients & Brands We’ve Served
+                </h3>
+                <div className="w-20 h-1 bg-blue-600 mx-auto mb-6 rounded-full"></div>
+                <p className="text-gray-600 max-w-2xl mx-auto">
+                  From local entrepreneurs to established companies, we are proud to
+                  have been a part of their brand journey.
+                </p>
+              </div>
 
+              {/* Logos grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-10 place-items-center">
+                <img src="/images/client-1.png" alt="Client 1" className="w-40 h-20 object-contain" />
+                <img src="/images/client-2.jpg" alt="Client 2" className="w-40 h-20 object-contain" />
+                <img src="/images/client-3.png" alt="Client 3" className="w-40 h-20 object-contain" />
+                <img src="/images/client-4.png" alt="Client 4" className="w-40 h-20 object-contain" />
+                <img src="/images/client-5.jpg" alt="Client 5" className="w-40 h-20 object-contain" />
+                <img src="/images/client-6.png" alt="Client 6" className="w-40 h-20 object-contain" />
+                <img src="/images/client-7.png" alt="Client 7" className="w-40 h-20 object-contain" />
+                <img src="/images/client-8.png" alt="Client 8" className="w-40 h-20 object-contain" />
+                <img src="/images/client-9.png" alt="Client 9" className="w-40 h-20 object-contain" />
+                <img src="/images/client-10.jpg" alt="Client 10" className="w-40 h-20 object-contain" />
+                <img src="/images/client-11.png" alt="Client 11" className="w-40 h-20 object-contain" />
+                <img src="/images/client-12.png" alt="Client 12" className="w-40 h-20 object-contain" />
+                <img src="/images/client-13.jpg" alt="Client 13" className="w-40 h-20 object-contain" />
+                <img src="/images/client-14.png" alt="Client 14" className="w-40 h-20 object-contain" />
+                <img src="/images/client-15.png" alt="Client 15" className="w-40 h-20 object-contain" />
+                {/* Add more logos as needed */}
+              </div>
+            </div>
+          </motion.section>
         </div>
       </section>
-
     </div>
   );
 }
