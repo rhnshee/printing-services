@@ -12,11 +12,21 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
-  const NavItem = ({ to, children }) => (
+  const NavItem = ({ to, children, onClick, className, mobile }) => (
     <NavLink 
-        to={to} 
-        className={({ isActive }) => 
-          `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out relative ${
+      to={to} 
+      onClick={onClick}
+      className={({ isActive }) => {
+        if (mobile) {
+          return `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out relative text-gray-700 ${
+            isActive
+              ? 'text-primary underline underline-offset-4 decoration-[#38BDF8]'
+              : 'hover:text-[#38BDF8] hover:underline hover:underline-offset-4 hover:decoration-[#38BDF8]'
+          }`;
+        } else if (className) {
+          return `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out relative ${className}`;
+        } else {
+          return `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-out relative ${
             isActive 
               ? (scrolled 
                   ? 'text-primary hover:underline hover:underline-offset-4 hover:decoration-[#38BDF8]' 
@@ -27,11 +37,12 @@ export default function Header() {
                   : 'text-white hover:text-[#38BDF8] hover:underline hover:underline-offset-4 hover:decoration-[#38BDF8]'
                 )
           } ${
-            !isActive && 'transform hover:scale-[1.03] active:scale-[0.98]'
-          }`
+            !isActive ? 'transform hover:scale-[1.03] active:scale-[0.98]' : ''
+          }`;
         }
-      >
-        {children}
+      }}
+    >
+      {children}
     </NavLink>
   );
 
@@ -116,6 +127,37 @@ export default function Header() {
           </button>
         </motion.div>
       </div>
+      {/* Mobile Slide-in Menu */}
+      <motion.nav
+        initial={{ x: '100%' }}
+        animate={{ x: open ? 0 : '100%' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className={`fixed top-0 right-0 h-screen w-4/5 max-w-xs bg-white shadow-lg z-[60] flex flex-col gap-6 p-8 md:hidden transition-all duration-300 ${open ? '' : 'pointer-events-none'}`}
+        style={{ boxShadow: '0 0 40px 0 rgba(0,0,0,0.15)' }}
+      >
+        <button
+          onClick={() => setOpen(false)}
+          className="self-end mb-4 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-300"
+          aria-label="Close menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <NavItem to="/" onClick={() => setOpen(false)} mobile>Home</NavItem>
+        <NavItem to="/about" onClick={() => setOpen(false)} mobile>About</NavItem>
+        <NavItem to="/services" onClick={() => setOpen(false)} mobile>Services</NavItem>
+        <NavItem to="/portfolio" onClick={() => setOpen(false)} mobile>Portfolio</NavItem>
+        <NavItem to="/contact" onClick={() => setOpen(false)} mobile>Contact</NavItem>
+        <NavItem to="/blog" onClick={() => setOpen(false)} mobile>Blog</NavItem>
+        <Link
+          to="/contact"
+          className="mt-4 px-4 py-2 rounded-full text-sm font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-all duration-300"
+          onClick={() => setOpen(false)}
+        >
+          Get Quote
+        </Link>
+      </motion.nav>
     </header>
   );
 }
