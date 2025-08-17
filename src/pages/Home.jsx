@@ -12,7 +12,7 @@ import heroImage3 from "../../public/images/pic2.jpg";
 const heroContent = [
   {
     image: '/images/pic.png',
-    title: "Elevate Your Brand With",
+    title: "Elevate Your Brand",
     subtitle: "Premium Printing",
     description: "From business cards to billboards — we deliver crisp colors, durable materials, and quick turnarounds."
   },
