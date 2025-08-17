@@ -14,7 +14,8 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1">{/* space for fixed header */}
+
+      <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/blog" element={<Blog />} />
         </Routes>
       </main>
+
       <Footer />
 
       {/* Floating Chat Icons */}
