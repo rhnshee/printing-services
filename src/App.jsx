@@ -26,7 +26,7 @@ export default function App() {
         </Routes>
       </main>
 
-      <Footer />
+      <Footer />  
 
       {/* Floating Chat Icons */}
       <FloatingChat />

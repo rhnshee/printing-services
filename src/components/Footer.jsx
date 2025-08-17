@@ -94,53 +94,24 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Newsletter CTA */}
-      <div className="max-w-xl mx-auto text-center mt-6 px-6">
-        <h4 className="font-semibold mb-2 text-white">Stay Updated</h4>
-        <p className="text-blue-300 mb-4">
-          Subscribe to our newsletter for the latest deals & updates.
-        </p>
-
-        <form
-          onSubmit={handleSubscribe}
-          className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+      {/* Social Icons */}
+      <div className="flex justify-center gap-6 mt-0 mb-5">
+        <a
+          href="https://facebook.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-200 hover:text-blue-400 transform hover:scale-110 transition duration-300"
         >
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            className="flex-1 border border-blue-700 bg-white-900 text-gray-100 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          />
-          <button
-            type="submit"
-            className="px-5 py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-500 transition"
-          >
-            Subscribe
-          </button>
-        </form>
-        {status && <p className="mt-3 text-sm text-blue-300">{status}</p>}
-
-        {/* Social Icons */}
-        <div className="flex justify-center gap-6 mt-6 mb-5">
-          <a
-            href="https://facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-200 hover:text-blue-400 transform hover:scale-110 transition duration-300"
-          >
-            <Facebook className="w-6 h-6" />
-          </a>
-          <a
-            href="https://instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-200 hover:text-pink-400 transform hover:scale-110 transition duration-300"
-          >
-            <Instagram className="w-6 h-6" />
-          </a>
-        </div>
+          <Facebook className="w-6 h-6" />
+        </a>
+        <a
+          href="https://instagram.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-200 hover:text-pink-400 transform hover:scale-110 transition duration-300"
+        >
+          <Instagram className="w-6 h-6" />
+        </a>
       </div>
 
       {/* Bottom bar */}

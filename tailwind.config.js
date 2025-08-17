@@ -1,4 +1,5 @@
-export default {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   content: [
     './index.html',
     './src/**/*.{js,jsx,ts,tsx}'
@@ -14,9 +15,8 @@ export default {
       },
       boxShadow: {
         card: '0 20px 40px rgba(37,99,235,0.10)',
-        '3d': '0 25px 50px -12px rgba(0, 0, 0, 0.25)' // Added for 3D effect
+        '3d': '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
       },
-      // Add these new extensions for 3D effects
       transformStyle: {
         'preserve-3d': 'preserve-3d',
       },
@@ -34,8 +34,11 @@ export default {
         '-5': '-5deg',
         '-10': '-10deg',
         '-15': '-15deg',
+        '1': '1deg',
+        '2': '2deg',
+        '-1': '-1deg',
+        '-2': '-2deg',
       },
-      // Optional: Add animation keyframes if you want more control
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
@@ -45,11 +48,21 @@ export default {
           '0%': { opacity: '0.5', transform: 'scale(0.8)' },
           '50%': { opacity: '1', transform: 'scale(1.1)' },
           '100%': { opacity: '0.5', transform: 'scale(0.8)' },
-        }
+        },
+        pulseSlow: {
+          '0%, 100%': { opacity: 0.8, transform: 'scale(0.95)' },
+          '50%': { opacity: 1, transform: 'scale(1.05)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
       },
       animation: {
         float: 'float 3s ease-in-out infinite',
         sparkle: 'sparkle 2s ease-in-out infinite',
+        marquee: 'marquee 20s linear infinite',
+        pulseSlow: 'pulseSlow 2.5s ease-in-out infinite',
       }
     },
   },

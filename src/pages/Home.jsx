@@ -366,6 +366,29 @@ export default function Home() {
         </div>
       </section>
 
+      <div className="overflow-hidden relative w-full bg-gradient-to-r from-primary-dark via-primary to-primary-light py-3 shadow-lg">
+        <div className="flex animate-marquee whitespace-nowrap text-white font-extrabold text-base sm:text-lg gap-8 sm:gap-12 perspective-500">
+          <span className="animate-pulseSlow drop-shadow-lg transform rotate-1">
+            50% DOWN PAYMENT AVAILABLE – Secure your order today!
+          </span>
+          <span className="animate-pulseSlow drop-shadow-lg transform -rotate-1">
+            50% DOWN PAYMENT AVAILABLE – Start your printing project now!
+          </span>
+          <span className="animate-pulseSlow drop-shadow-lg transform rotate-2">
+            50% DOWN PAYMENT AVAILABLE – High-quality prints made easy!
+          </span>
+          <span className="animate-pulseSlow drop-shadow-lg transform -rotate-2">
+            50% DOWN PAYMENT AVAILABLE – Secure your order today!
+          </span>
+          <span className="animate-pulseSlow drop-shadow-lg transform rotate-1">
+            50% DOWN PAYMENT AVAILABLE – Start your printing project now!
+          </span>
+        </div>
+      </div>
+
+
+
+
       {/* PORTFOLIO PREVIEW */}
       <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="max-w-7xl mx-auto px-6">
