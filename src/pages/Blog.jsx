@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Blog() {
   const posts = [
@@ -26,19 +26,35 @@ export default function Blog() {
   ];
 
   return (
-    <section className="py-16 bg-gray-50" id="blog">
-      <div className="container mx-auto px-6">
-        <h2 className="section-title text-center">Our Blog</h2>
-        <p className="section-sub text-center max-w-2xl mx-auto mb-10">
-          Helpful tips and stories from our printing experts.
-        </p>
+    <div>
+      {/* Hero Section */}
+      <section className="relative h-[300px] md:h-[400px] flex items-center justify-center text-center bg-gradient-to-r from-primary/90 to-primary-dark/90 text-white">
+        {/* Background image (optional) */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/blog-hero.png"
+            alt="Blog Hero"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {blogPosts.map((post, idx) => (
-            <motion.div
-              key={idx}
-              whileHover={{ y: -5 }}
-              className="bg-white shadow-md rounded-xl p-6"
+        {/* Content */}
+        <div className="relative z-10 px-4">
+          <h1 className="text-4xl md:text-5xl font-bold">Our Blog</h1>
+          <p className="mt-4 text-lg max-w-2xl mx-auto">
+            Insights, tips, and stories from the world of printing and design.
+          </p>
+        </div>
+      </section>
+
+      {/* Blog List */}
+      <section className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition"
             >
               <h2 className="text-xl font-semibold mb-3">{post.title}</h2>
               <p className="text-gray-600 mb-4">{post.excerpt}</p>
